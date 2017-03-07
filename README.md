@@ -2,9 +2,7 @@
 
 > This tutorial introduces the zabbix installation and use.
 
-- https://github.com/alexanderzobnin/grafana-zabbix
-- https://github.com/zbal/zabbix
-- https://github.com/itnihao/zabbix-book
+- https://github.com/wh211212/zabbix-tutorial
 
 # Some website form learning zabbix
 
@@ -14,7 +12,7 @@
 
 # Some useful github project for learn zabbix.
 
-> 1. https://github.com/itnihao
+> 1. https://github.com/itnihao/zabbix-book
 > 2. https://github.com/zbal/zabbix
 > 3. https://github.com/alexanderzobnin/grafana-zabbix
 
