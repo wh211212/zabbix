@@ -27,7 +27,7 @@ ssh-copy-id pinpoint-agent
 192.168.0.102
 
 # use ansible
-[root@ansible ~]# ansible pinpoint -m ping
+[root@ansible ~]# ansible pinpoint -m ping   # 执行命令加参数 -o，便于阅读
 192.168.0.101 | SUCCESS => {
     "changed": false,
     "ping": "pong"
@@ -36,6 +36,11 @@ ssh-copy-id pinpoint-agent
     "changed": false,
     "ping": "pong"
 }
+#
+[root@ansible playbook]# ansible pinpoint -m ping -o
+192.168.0.102 | SUCCESS => {"changed": false, "ping": "pong"}
+192.168.0.101 | SUCCESS => {"changed": false, "ping": "pong"}
+
 [root@ansible ~]# ansible pinpoint -m command -a 'hostname'
 192.168.0.102 | SUCCESS | rc=0 >>
 pinpoint-agent
@@ -236,3 +241,124 @@ ok: [192.168.0.102] => {
 PLAY RECAP *********************************************************************
 192.168.0.101              : ok=3    changed=1    unreachable=0    failed=0
 192.168.0.102              : ok=3    changed=1    unreachable=0    failed=0
+
+# 使用playbook在目标主机创建不存在的文件
+[root@ansible ~]# cat playbook_sample.yml
+# set boolean with failed_when
+# create "index.html" if result of boolean is "1"
+- hosts: pinpoint
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: index file exists or not
+    shell: test -f /var/www/html/index.html
+    ignore_errors: true
+    register: file_exists
+    failed_when: file_exists.rc not in [0, 1]
+
+  - name: put index.html
+    shell: echo "httpd index" > /var/www/html/index.html
+    when: file_exists.rc == 1
+#
+[root@ansible ~]# ansible-playbook playbook_sample.yml
+
+PLAY [pinpoint] ****************************************************************
+
+TASK [setup] *******************************************************************
+ok: [192.168.0.101]
+ok: [192.168.0.102]
+
+TASK [index file exists or not] ************************************************
+changed: [192.168.0.102]
+changed: [192.168.0.101]
+
+TASK [put index.html] **********************************************************
+changed: [192.168.0.101]
+changed: [192.168.0.102]
+
+PLAY RECAP *********************************************************************
+192.168.0.101              : ok=3    changed=2    unreachable=0    failed=0
+192.168.0.102              : ok=3    changed=2    unreachable=0    failed=0
+#
+[root@ansible ~]# ansible pinpoint -m shell -a 'cat /var/www/html/index.html'
+192.168.0.102 | SUCCESS | rc=0 >>
+httpd index
+
+192.168.0.101 | SUCCESS | rc=0 >>
+httpd index
+
+# 使用playbook修改配置文件然后通知重启相关服务
+[root@ansible ~]# cat ansible-playbook playbook_sshd.yml
+cat: ansible-playbook: No such file or directory
+- hosts: pinpoint
+  become: yes
+  become_method: sudo
+  handlers:
+  - name: restart sshd
+    service: name=sshd state=restarted
+  tasks:
+  - name: edit sshd_config
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="{{ item.regexp }}"
+      line="{{ item.line }}"
+    with_items:
+    - { regexp: '^#PermitRootLogin', line: 'PermitRootLogin no' }
+    notify: restart sshd
+    tags: Edit_sshd_config
+#
+[root@ansible ~]# ansible-playbook playbook_sshd.yml
+
+PLAY [pinpoint] ****************************************************************
+
+TASK [setup] *******************************************************************
+ok: [192.168.0.102]
+ok: [192.168.0.101]
+
+TASK [edit sshd_config] ********************************************************
+changed: [192.168.0.102] => (item={u'regexp': u'^#PermitRootLogin', u'line': u'PermitRootLogin no'})
+changed: [192.168.0.101] => (item={u'regexp': u'^#PermitRootLogin', u'line': u'PermitRootLogin no'})
+
+RUNNING HANDLER [restart sshd] *************************************************
+changed: [192.168.0.101]
+changed: [192.168.0.102]
+
+PLAY RECAP *********************************************************************
+192.168.0.101              : ok=3    changed=2    unreachable=0    failed=0
+192.168.0.102              : ok=3    changed=2    unreachable=0    failed=0
+
+# 使用普通用户执行playbook
+[wh@ansible ~]$ ansible pinpoint -m command -a "grep '^#PermitRootLogin' /etc/ssh/sshd_config" -b
+[WARNING]: log file at /var/log/ansible.log is not writeable and we cannot create it, aborting
+
+192.168.0.102 | SUCCESS | rc=0 >>
+#PermitRootLogin no
+
+192.168.0.101 | SUCCESS | rc=0 >>
+#PermitRootLogin no
+
+# playbook中调用playbook实现，加上使用roles函数 # 重要
+
+[root@ansible ansible]# ansible-playbook playbook_sample.yml
+
+PLAY [pinpoint] ****************************************************************
+
+TASK [setup] *******************************************************************
+ok: [192.168.0.101]
+ok: [192.168.0.102]
+
+TASK [ins_python_lib : setuptools is installed] ********************************
+ok: [192.168.0.102] => (item=[u'python-setuptools'])
+ok: [192.168.0.101] => (item=[u'python-setuptools'])
+
+TASK [ins_python_lib : pip is installed] ***************************************
+ok: [192.168.0.102] => (item=pip)
+ok: [192.168.0.101] => (item=pip)
+
+TASK [ins_python_lib : httplib2 are installed] *********************************
+ok: [192.168.0.101] => (item=httplib2)
+changed: [192.168.0.102] => (item=httplib2)
+
+PLAY RECAP *********************************************************************
+192.168.0.101              : ok=4    changed=0    unreachable=0    failed=0
+192.168.0.102              : ok=4    changed=1    unreachable=0    failed=0
