@@ -14,7 +14,7 @@
 cd /etc/ansible
 mkdir plugins
 wget https://raw.githubusercontent.com/jlafon/ansible-profile/master/callback_plugins/profile_tasks.py
-echo "callback_whitelist = profile_tasks" >> /etc/ansible/ansible.cfg
+echo "<callback_white></callback_white>list = profile_tasks" >> /etc/ansible/ansible.cfg
 ```
 
 >安装完成，执行playbook暂未显示任务执行完成花费时间。
