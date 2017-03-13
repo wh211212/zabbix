@@ -173,5 +173,8 @@
 [language-vue](https://atom.io/packages/language-vue) vue框架代码高亮
 - 终端  
 [platformio-atom-ide-terminal](https://atom.io/packages/platformio-ide-terminal) 终端插件，支持显示、隐藏及多窗口
+- PDF
+[pdf-view](https://atom.io/packages/pdf-view) PDF阅读插件
+[markdown-pdf](https://atom.io/packages/markdown-pdf) Markdown转换成PDF
 
 就这些了，欢迎pull更多好用的插件！

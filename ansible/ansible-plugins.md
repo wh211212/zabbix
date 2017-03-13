@@ -18,3 +18,13 @@ echo "<callback_white></callback_white>list = profile_tasks" >> /etc/ansible/ans
 ```
 
 >安装完成，执行playbook暂未显示任务执行完成花费时间。
+
+## 优化Ansible速度
+
+- 1. 开启SSH长连接
+
+> OpenSSH 5.6版本以后SSH就支持了Multiplexing，修改ansible.cfg文件中设置SSH长连接,设置参数如下:
+
+```
+sh_args = -o ControlMaster=auto -o ControlPersist=5d
+```
