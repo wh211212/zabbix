@@ -25,4 +25,6 @@ yum --enablerepo=remi-safe install [Package]  #
 
 ##
 
-yum --enablerepo=remi-safe -y install php71
+yum --enablerepo=remi-safe install php71 php71-php-fpm
+
+yum --enablerepo=remi-safe install php71-php-bcmath php71-php-common php71-php-gd php71-php-ldap php71-php-mbstring php71-php-pdo php71-php-xml unixODBC
