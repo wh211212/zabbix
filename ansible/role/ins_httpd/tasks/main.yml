@@ -1,0 +1,4 @@
+---
+  # tasks for install httpd
+- include: install_httpd.yml
+- include: sync_httpd.conf.yml
