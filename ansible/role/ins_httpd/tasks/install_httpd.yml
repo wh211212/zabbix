@@ -4,7 +4,7 @@
   yum: name="{{ item }}" state=installed
   with_items:
     - "{{ packages }}"
-    tags: install_httpd
+      tags: install_httpd
 - name: config httpd.config
   lineinfile: >
     dest=/etc/httpd/conf/httpd.conf
@@ -21,4 +21,4 @@
   copy: src=index.html dest=/var/www/html owner=root group=root mode=0644
 
 - name: check httpd
-  url: url=http://"{{ ansible_fdqn }}" 
+  url: url=http://"{{ ansible_fdqn }}"
