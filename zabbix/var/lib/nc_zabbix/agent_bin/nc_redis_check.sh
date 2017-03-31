@@ -1,19 +1,10 @@
 #!/bin/bash
-##################################
-# Zabbix monitoring script
-#
-# redis:
-#  - redis status monitoring 
-#
-##################################
-# Contact:
-#  alan.sun@chinanetcloud.com
-##################################
-# ChangeLog:
-#  20120921     AS      Init create 
-#  20160421     TZ      Add new para for port
-#  20160422     TZ      Add maxmemory
-##################################
+###################################################
+# Function: monitor redis status from zabbix
+# Connect: hwang@aniu.tv
+# Changelog:
+# 2017-03-29  shaonbean    initial
+###################################################
 
 REDIS_IP=127.0.0.1
 REDIS_PORT=6379
@@ -48,7 +39,7 @@ if [ ! -z $ZABBIX_REQ_PORT ]; then
   REDIS_PORT="$ZABBIX_REQ_PORT"
 fi
 
-# create redis status file. 
+# create redis status file.
 status_generate() {
 #    REDIS_STATS=$($REDIS_CLI -h $REDIS_IP -p $REDIS_PORT INFO)
      REDIS_STATS=$($REDIS_CLI -h $REDIS_IP -p $REDIS_PORT 2> /dev/null<< EOF
@@ -98,7 +89,7 @@ else
     if [ $((NOW - LAST_CTIME)) -lt 30 ]; then
 	read_value "$ZABBIX_REQ"
     else
-        status_generate 
+        status_generate
 	read_value "$ZABBIX_REQ"
     fi
 fi
