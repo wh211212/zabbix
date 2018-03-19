@@ -18,3 +18,6 @@ omreport storage pdisk controller=0
 omreport chassis pwrsupplies
 #raid 状态
 omreport storage vdisk controller=0
+
+# 监控截图
+
