@@ -2,6 +2,8 @@
 
 > This tutorial introduces the zabbix installation and use.
 
+> 项目中所有模板基于Zabbix 3.0.15（zabbix 3最新版),笔者zabbix server是yum 源安装，会定时更新当前大版本的最新版
+
 - https://github.com/wh211212/zabbix
 
 # Some website form learning zabbix
