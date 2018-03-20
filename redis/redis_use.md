@@ -1,4 +1,4 @@
-# 本机测试监控redis取值情况
+# 本机测试监控redis取值情况,笔者使用的是shell脚本
 
 # 配置zabbix账户具有sudo权限
 
