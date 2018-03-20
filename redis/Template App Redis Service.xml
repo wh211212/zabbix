@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.0</version>
-    <date>2018-03-19T04:35:31Z</date>
+    <date>2018-03-20T13:41:13Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -23,6 +23,9 @@
                 </application>
                 <application>
                     <name>Redis Clients</name>
+                </application>
+                <application>
+                    <name>Redis Cluster</name>
                 </application>
                 <application>
                     <name>Redis CPU</name>
@@ -130,6 +133,50 @@
                             <application_prototypes/>
                         </item_prototype>
                         <item_prototype>
+                            <name>Redis $1 Port hit rate</name>
+                            <type>15</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>redis.hit.rate[{#REDISPORT}]</key>
+                            <delay>60</delay>
+                            <history>7</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>1</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params>100*last(&quot;redis.status[{#REDISPORT},keyspace_hits]&quot;,1)/(last(&quot;redis.status[{#REDISPORT},keyspace_hits]&quot;,1)+last(&quot;redis.status[{#REDISPORT},keyspace_misses]&quot;,1))</params>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Redis Stats</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
                             <name>Redis used_memory  and used_memory_rss percent on  {#REDISPORT}</name>
                             <type>15</type>
                             <snmp_community/>
@@ -153,7 +200,7 @@
                             <snmpv3_privpassphrase/>
                             <formula>1</formula>
                             <delay_flex/>
-                            <params>last(&quot;redis.status[{#REDISPORT},used_memory]&quot;,0)/last(&quot;redis.status[{#REDISPORT},used_memory_rss]&quot;,0)</params>
+                            <params>last(&quot;redis.status[{#REDISPORT},used_memory]&quot;,1)/last(&quot;redis.status[{#REDISPORT},used_memory_rss]&quot;,1)</params>
                             <ipmi_sensor/>
                             <data_type>0</data_type>
                             <authtype>0</authtype>
@@ -270,9 +317,9 @@
                             <key>redis.status[{#REDISPORT},aof_last_bgrewrite_status]</key>
                             <delay>60</delay>
                             <history>7</history>
-                            <trends>365</trends>
+                            <trends>0</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>4</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -483,7 +530,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 Port Blocked clients</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -527,7 +574,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 Port client_biggest_input_buf</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -571,7 +618,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 Port client_longest_output_list</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -614,8 +661,55 @@
                             <application_prototypes/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Redis $1 Port Connected clients</name>
-                            <type>7</type>
+                            <name>Redis $1 Port cluster_enabled</name>
+                            <type>0</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>redis.status[{#REDISPORT},cluster_enabled]</key>
+                            <delay>60</delay>
+                            <history>7</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>1</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Redis Cluster</name>
+                                </application>
+                                <application>
+                                    <name>Redis CPU</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Redis $1 Port Connected Clients</name>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -659,7 +753,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 port connected_slaves</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -702,7 +796,7 @@
                             <application_prototypes/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Redis $1 port Evicted_keys</name>
+                            <name>Redis $1 port evicted_keys</name>
                             <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
@@ -746,7 +840,7 @@
                             <application_prototypes/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Redis $1 Port Expired keys</name>
+                            <name>Redis $1 Port expired_keys</name>
                             <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
@@ -879,7 +973,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 Port keyspace_misses</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -923,7 +1017,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 Port latest_fork_usec</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1011,7 +1105,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 port master_repl_offset</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1047,6 +1141,50 @@
                             <applications>
                                 <application>
                                     <name>Redis Replication</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Redis $1 Port maxmemory</name>
+                            <type>0</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>redis.status[{#REDISPORT},maxmemory]</key>
+                            <delay>60</delay>
+                            <history>7</history>
+                            <trends>0</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Redis Memory</name>
                                 </application>
                             </applications>
                             <valuemap/>
@@ -1099,7 +1237,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 Port pubsub_channels</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1143,7 +1281,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 Port pubsub_patterns</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1319,7 +1457,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 port rdb_last_bgsave_status</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1363,7 +1501,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 port rdb_last_save_time</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1406,6 +1544,50 @@
                             <application_prototypes/>
                         </item_prototype>
                         <item_prototype>
+                            <name>Redis $1 Port redis_mode</name>
+                            <type>0</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>redis.status[{#REDISPORT},redis_mode]</key>
+                            <delay>86400</delay>
+                            <history>7</history>
+                            <trends>0</trends>
+                            <status>0</status>
+                            <value_type>4</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Redis Server</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
                             <name>Redis $1 Port redis_version</name>
                             <type>0</type>
                             <snmp_community/>
@@ -1416,7 +1598,7 @@
                             <history>7</history>
                             <trends>0</trends>
                             <status>0</status>
-                            <value_type>4</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -1495,7 +1677,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 port repl_backlog_active</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1539,7 +1721,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 port repl_backlog_first_byte_offset</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1583,7 +1765,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 port repl_backlog_histlen</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1627,7 +1809,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 port repl_backlog_size</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1670,8 +1852,8 @@
                             <application_prototypes/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Redis $1 port Role</name>
-                            <type>7</type>
+                            <name>Redis $1 port role</name>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1680,7 +1862,7 @@
                             <history>7</history>
                             <trends>0</trends>
                             <status>0</status>
-                            <value_type>1</value_type>
+                            <value_type>4</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -1759,7 +1941,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>Redis $1 Port sync_partial_ok</name>
-                            <type>7</type>
+                            <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -1795,6 +1977,50 @@
                             <applications>
                                 <application>
                                     <name>Redis Stats</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Redis $1 Port tcp_port</name>
+                            <type>0</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>redis.status[{#REDISPORT},tcp_port]</key>
+                            <delay>86400</delay>
+                            <history>7</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Redis Server</name>
                                 </application>
                             </applications>
                             <valuemap/>
@@ -1890,6 +2116,182 @@
                             <application_prototypes/>
                         </item_prototype>
                         <item_prototype>
+                            <name>Redis $1 Port total_net_input_bytes</name>
+                            <type>0</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>redis.status[{#REDISPORT},total_net_input_bytes]</key>
+                            <delay>60</delay>
+                            <history>7</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>1</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Redis Stats</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Redis $1 Port total_net_output_bytes</name>
+                            <type>0</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>redis.status[{#REDISPORT},total_net_output_bytes]</key>
+                            <delay>60</delay>
+                            <history>7</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>1</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Redis Stats</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Redis $1 Port total_system_memory</name>
+                            <type>0</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>redis.status[{#REDISPORT},total_system_memory]</key>
+                            <delay>60</delay>
+                            <history>7</history>
+                            <trends>0</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Redis Memory</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Redis $1 Port uptime_in_days</name>
+                            <type>0</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>redis.status[{#REDISPORT},uptime_in_days]</key>
+                            <delay>86400</delay>
+                            <history>7</history>
+                            <trends>90</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Redis Server</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
                             <name>Redis $1 Port Uptime in seconds</name>
                             <type>0</type>
                             <snmp_community/>
@@ -1944,7 +2346,7 @@
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>1</delta>
@@ -1988,7 +2390,7 @@
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>1</delta>
@@ -2032,7 +2434,7 @@
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>1</delta>
@@ -2076,7 +2478,7 @@
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>1</delta>
@@ -2110,7 +2512,7 @@
                             <application_prototypes/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Redis $1 Port Used memory</name>
+                            <name>Redis $1 Port used_memory</name>
                             <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
@@ -2164,7 +2566,7 @@
                             <history>7</history>
                             <trends>0</trends>
                             <status>0</status>
-                            <value_type>1</value_type>
+                            <value_type>3</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -2242,7 +2644,7 @@
                             <application_prototypes/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Redis $1 Port Used_memory_rss</name>
+                            <name>Redis $1 Port used_memory_rss</name>
                             <type>0</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
@@ -2250,7 +2652,7 @@
                             <key>redis.status[{#REDISPORT},used_memory_rss]</key>
                             <delay>60</delay>
                             <history>7</history>
-                            <trends>365</trends>
+                            <trends>0</trends>
                             <status>0</status>
                             <value_type>3</value_type>
                             <allowed_hosts/>
@@ -2320,7 +2722,7 @@
                     </trigger_prototypes>
                     <graph_prototypes>
                         <graph_prototype>
-                            <name>Redis {#REDISPORT} Port Connections</name>
+                            <name>Redis {#REDISPORT} Connected Clients</name>
                             <width>900</width>
                             <height>200</height>
                             <yaxismin>0.0000</yaxismin>
@@ -2340,19 +2742,7 @@
                                 <graph_item>
                                     <sortorder>0</sortorder>
                                     <drawtype>0</drawtype>
-                                    <color>C80000</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>Template App Redis Service</host>
-                                        <key>redis.status[{#REDISPORT},blocked_clients]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>1</sortorder>
-                                    <drawtype>0</drawtype>
-                                    <color>00C800</color>
+                                    <color>2774A4</color>
                                     <yaxisside>0</yaxisside>
                                     <calc_fnc>2</calc_fnc>
                                     <type>0</type>
@@ -2362,33 +2752,21 @@
                                     </item>
                                 </graph_item>
                                 <graph_item>
-                                    <sortorder>2</sortorder>
+                                    <sortorder>1</sortorder>
                                     <drawtype>0</drawtype>
-                                    <color>0000C8</color>
+                                    <color>A54F10</color>
                                     <yaxisside>0</yaxisside>
                                     <calc_fnc>2</calc_fnc>
                                     <type>0</type>
                                     <item>
                                         <host>Template App Redis Service</host>
-                                        <key>redis.status[{#REDISPORT},total_connections_received]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>3</sortorder>
-                                    <drawtype>0</drawtype>
-                                    <color>C800C8</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>Template App Redis Service</host>
-                                        <key>redis.status[{#REDISPORT},total_commands_processed]</key>
+                                        <key>redis.status[{#REDISPORT},connected_slaves]</key>
                                     </item>
                                 </graph_item>
                             </graph_items>
                         </graph_prototype>
                         <graph_prototype>
-                            <name>Redis {#REDISPORT} Port key</name>
+                            <name>Redis {#REDISPORT} CPU used</name>
                             <width>900</width>
                             <height>200</height>
                             <yaxismin>0.0000</yaxismin>
@@ -2408,25 +2786,141 @@
                                 <graph_item>
                                     <sortorder>0</sortorder>
                                     <drawtype>0</drawtype>
-                                    <color>C80000</color>
+                                    <color>2774A4</color>
                                     <yaxisside>0</yaxisside>
                                     <calc_fnc>2</calc_fnc>
                                     <type>0</type>
                                     <item>
                                         <host>Template App Redis Service</host>
-                                        <key>redis.status[{#REDISPORT},evicted_keys]</key>
+                                        <key>redis.status[{#REDISPORT},used_cpu_sys]</key>
                                     </item>
                                 </graph_item>
                                 <graph_item>
                                     <sortorder>1</sortorder>
                                     <drawtype>0</drawtype>
-                                    <color>00C800</color>
+                                    <color>A54F10</color>
                                     <yaxisside>0</yaxisside>
                                     <calc_fnc>2</calc_fnc>
                                     <type>0</type>
                                     <item>
                                         <host>Template App Redis Service</host>
-                                        <key>redis.status[{#REDISPORT},expired_keys]</key>
+                                        <key>redis.status[{#REDISPORT},used_cpu_sys_children]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>FC6EA3</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},used_cpu_user]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>6C59DC</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},used_cpu_user_children]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Redis {#REDISPORT} Memory Status</name>
+                            <width>900</width>
+                            <height>200</height>
+                            <yaxismin>0.0000</yaxismin>
+                            <yaxismax>100.0000</yaxismax>
+                            <show_work_period>1</show_work_period>
+                            <show_triggers>1</show_triggers>
+                            <type>0</type>
+                            <show_legend>1</show_legend>
+                            <show_3d>0</show_3d>
+                            <percent_left>0.0000</percent_left>
+                            <percent_right>0.0000</percent_right>
+                            <ymin_type_1>0</ymin_type_1>
+                            <ymax_type_1>0</ymax_type_1>
+                            <ymin_item_1>0</ymin_item_1>
+                            <ymax_item_1>0</ymax_item_1>
+                            <graph_items>
+                                <graph_item>
+                                    <sortorder>0</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>A54F10</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},used_memory]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>AC8C14</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},used_memory_rss]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>6C59DC</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},used_memory_peak]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>2774A4</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},total_system_memory]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>4</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>FC6EA3</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},used_memory_lua]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>5</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>F63100</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},maxmemory]</key>
                                     </item>
                                 </graph_item>
                             </graph_items>
@@ -2476,7 +2970,7 @@
                             </graph_items>
                         </graph_prototype>
                         <graph_prototype>
-                            <name>Redis {#REDISPORT} Port status</name>
+                            <name>Redis {#REDISPORT} Port keyspace_hits_misses</name>
                             <width>900</width>
                             <height>200</height>
                             <yaxismin>0.0000</yaxismin>
@@ -2496,89 +2990,145 @@
                                 <graph_item>
                                     <sortorder>0</sortorder>
                                     <drawtype>0</drawtype>
-                                    <color>009900</color>
+                                    <color>F63100</color>
                                     <yaxisside>0</yaxisside>
                                     <calc_fnc>2</calc_fnc>
                                     <type>0</type>
                                     <item>
                                         <host>Template App Redis Service</host>
-                                        <key>net.tcp.listen[{#REDISPORT}]</key>
-                                    </item>
-                                </graph_item>
-                            </graph_items>
-                        </graph_prototype>
-                        <graph_prototype>
-                            <name>Redis {#REDISPORT} Port Uptime_in_seconds</name>
-                            <width>900</width>
-                            <height>200</height>
-                            <yaxismin>0.0000</yaxismin>
-                            <yaxismax>100.0000</yaxismax>
-                            <show_work_period>1</show_work_period>
-                            <show_triggers>1</show_triggers>
-                            <type>0</type>
-                            <show_legend>1</show_legend>
-                            <show_3d>0</show_3d>
-                            <percent_left>0.0000</percent_left>
-                            <percent_right>0.0000</percent_right>
-                            <ymin_type_1>0</ymin_type_1>
-                            <ymax_type_1>0</ymax_type_1>
-                            <ymin_item_1>0</ymin_item_1>
-                            <ymax_item_1>0</ymax_item_1>
-                            <graph_items>
-                                <graph_item>
-                                    <sortorder>0</sortorder>
-                                    <drawtype>0</drawtype>
-                                    <color>00BB00</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>Template App Redis Service</host>
-                                        <key>redis.status[{#REDISPORT},uptime_in_seconds]</key>
-                                    </item>
-                                </graph_item>
-                            </graph_items>
-                        </graph_prototype>
-                        <graph_prototype>
-                            <name>Redis {#REDISPORT} Port Used memory</name>
-                            <width>900</width>
-                            <height>200</height>
-                            <yaxismin>0.0000</yaxismin>
-                            <yaxismax>100.0000</yaxismax>
-                            <show_work_period>1</show_work_period>
-                            <show_triggers>1</show_triggers>
-                            <type>0</type>
-                            <show_legend>1</show_legend>
-                            <show_3d>0</show_3d>
-                            <percent_left>0.0000</percent_left>
-                            <percent_right>0.0000</percent_right>
-                            <ymin_type_1>0</ymin_type_1>
-                            <ymax_type_1>0</ymax_type_1>
-                            <ymin_item_1>0</ymin_item_1>
-                            <ymax_item_1>0</ymax_item_1>
-                            <graph_items>
-                                <graph_item>
-                                    <sortorder>0</sortorder>
-                                    <drawtype>0</drawtype>
-                                    <color>C80000</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>Template App Redis Service</host>
-                                        <key>redis.status[{#REDISPORT},used_memory]</key>
+                                        <key>redis.status[{#REDISPORT},keyspace_hits]</key>
                                     </item>
                                 </graph_item>
                                 <graph_item>
                                     <sortorder>1</sortorder>
                                     <drawtype>0</drawtype>
-                                    <color>00C800</color>
+                                    <color>2774A4</color>
                                     <yaxisside>0</yaxisside>
                                     <calc_fnc>2</calc_fnc>
                                     <type>0</type>
                                     <item>
                                         <host>Template App Redis Service</host>
-                                        <key>redis.status[{#REDISPORT},used_memory_rss]</key>
+                                        <key>redis.status[{#REDISPORT},keyspace_misses]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Redis {#REDISPORT} Port total_net_traffic</name>
+                            <width>900</width>
+                            <height>200</height>
+                            <yaxismin>0.0000</yaxismin>
+                            <yaxismax>100.0000</yaxismax>
+                            <show_work_period>1</show_work_period>
+                            <show_triggers>1</show_triggers>
+                            <type>0</type>
+                            <show_legend>1</show_legend>
+                            <show_3d>0</show_3d>
+                            <percent_left>0.0000</percent_left>
+                            <percent_right>0.0000</percent_right>
+                            <ymin_type_1>0</ymin_type_1>
+                            <ymax_type_1>0</ymax_type_1>
+                            <ymin_item_1>0</ymin_item_1>
+                            <ymax_item_1>0</ymax_item_1>
+                            <graph_items>
+                                <graph_item>
+                                    <sortorder>0</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>F63100</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},total_net_input_bytes]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>2774A4</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},total_net_output_bytes]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Redis {#REDISPORT} Port uptime_in_days</name>
+                            <width>900</width>
+                            <height>200</height>
+                            <yaxismin>0.0000</yaxismin>
+                            <yaxismax>100.0000</yaxismax>
+                            <show_work_period>1</show_work_period>
+                            <show_triggers>1</show_triggers>
+                            <type>0</type>
+                            <show_legend>1</show_legend>
+                            <show_3d>0</show_3d>
+                            <percent_left>0.0000</percent_left>
+                            <percent_right>0.0000</percent_right>
+                            <ymin_type_1>0</ymin_type_1>
+                            <ymax_type_1>0</ymax_type_1>
+                            <ymin_item_1>0</ymin_item_1>
+                            <ymax_item_1>0</ymax_item_1>
+                            <graph_items>
+                                <graph_item>
+                                    <sortorder>0</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>F63100</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},uptime_in_days]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Redis {#REDISPORT} Stats</name>
+                            <width>900</width>
+                            <height>200</height>
+                            <yaxismin>0.0000</yaxismin>
+                            <yaxismax>100.0000</yaxismax>
+                            <show_work_period>1</show_work_period>
+                            <show_triggers>1</show_triggers>
+                            <type>0</type>
+                            <show_legend>1</show_legend>
+                            <show_3d>0</show_3d>
+                            <percent_left>0.0000</percent_left>
+                            <percent_right>0.0000</percent_right>
+                            <ymin_type_1>0</ymin_type_1>
+                            <ymax_type_1>0</ymax_type_1>
+                            <ymin_item_1>0</ymin_item_1>
+                            <ymax_item_1>0</ymax_item_1>
+                            <graph_items>
+                                <graph_item>
+                                    <sortorder>0</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>2774A4</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},total_commands_processed]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <drawtype>0</drawtype>
+                                    <color>A54F10</color>
+                                    <yaxisside>0</yaxisside>
+                                    <calc_fnc>2</calc_fnc>
+                                    <type>0</type>
+                                    <item>
+                                        <host>Template App Redis Service</host>
+                                        <key>redis.status[{#REDISPORT},total_connections_received]</key>
                                     </item>
                                 </graph_item>
                             </graph_items>
